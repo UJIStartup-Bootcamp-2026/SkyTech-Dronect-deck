@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dronect — Pitch deck · UJI Bootcamp 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/*
+  Dronect — pitch deck · v2 «vigilancia nocturna»
+  Método: MCP/PITCH_DECK_MCP_DESIGN.md v0.2 · Fuente de verdad: SkyTech-Dronect-docs v0.2
+  Colores de marca tomados del logotipo (azul marino + turquesa). Fondo nocturno más profundo y apagado que el marino del logo.
+  Ámbar = solo alertas (el dron, los avisos y lo pendiente).
+  Teclas: ← → / AvPág RePág para navegar · N muestra u oculta las notas del orador.
+*/
+:root{
+  --noche:#0C1620;      /* fondo: noche apagada, distinto del marino del logo */
+  --noche-2:#122130;    /* paneles */
+  --noche-3:#1A2D40;    /* paneles elevados, filas */
+  --linea:#26394C;      /* separadores */
+  --marino:#15315B;     /* azul del logotipo */
+  --turquesa:#2A9490;   /* turquesa del logotipo */
+  --turquesa-luz:#5CC6BE; /* turquesa legible sobre fondo oscuro */
+  --texto:#EAF0F4;
+  --texto-2:#93A6B6;
+  --alerta:#F0A23A;     /* ámbar: solo alertas */
+
+  --margen:clamp(20px,6vw,96px);
+  --t-titulo:clamp(28px,3.5vw,52px);
+  --t-cuerpo:clamp(16px,1.5vw,22px);
+  --t-pequeno:clamp(12px,.95vw,15px);
+  --t-heroe:clamp(60px,9vw,140px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth;background:var(--noche)}
+body{font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--texto);
+  font-size:var(--t-cuerpo);line-height:1.45;-webkit-font-smoothing:antialiased;font-feature-settings:"tnum" 1,"cv11" 1}
+
+/* ---------- diapositiva ---------- */
+.diapo{position:relative;min-height:100vh;min-height:100svh;scroll-snap-align:start;scroll-snap-stop:always;
+  display:grid;grid-template-rows:auto 1fr auto;padding:clamp(18px,3.4vh,44px) var(--margen) clamp(18px,3.4vh,44px) calc(var(--margen) + clamp(18px,2.4vw,40px));
+  background-color:var(--noche);
+  /* anillos de radar desde la esquina inferior derecha */
+  background-image:radial-gradient(circle at 100% 100%,rgba(12,22,32,0) 0,rgba(12,22,32,0) 22%,var(--noche) 52%),repeating-radial-gradient(circle at 100% 100%,transparent 0 72px,rgba(92,198,190,.13) 72px 73.5px);
+  overflow:hidden}
+.tabla-scroll{overflow-x:auto;max-width:100%}
+.cuerpo{min-width:0;align-self:center;width:100%;max-width:1320px;margin:0 auto;padding:clamp(16px,3vh,36px) 0}
+
+/* cabecera: en portada y cierre, línea superior; en el resto, raíl vertical a la izquierda */
+.cabecera{display:flex;justify-content:space-between;align-items:center;font-size:var(--t-pequeno);color:var(--texto-2)}
+.diapo:not(.portada):not(.cierre) .cabecera{position:absolute;left:clamp(14px,2.2vw,36px);top:0;bottom:0;display:flex;align-items:center;justify-content:center;
+  writing-mode:vertical-rl;transform:rotate(180deg);gap:14px;letter-spacing:.02em}
+.diapo:not(.portada):not(.cierre) .cabecera::after{content:"";width:1px;flex:0 0 clamp(40px,10vh,90px);background:var(--turquesa)}
+.cabecera .marca{display:none}
+.diapo:not(.portada):not(.cierre){grid-template-rows:1fr auto}
+
+.pie{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;font-size:var(--t-pequeno);color:var(--texto-2)}
+.pie .fuente{max-width:82ch}
+.pie a{color:inherit;text-decoration-color:var(--linea);text-underline-offset:2px}
+.pie .folio{white-space:nowrap;color:var(--turquesa-luz);font-weight:600}
+
+h1,h2{font-weight:700;letter-spacing:-.022em;line-height:1.1}
+h2{font-size:var(--t-titulo);max-width:23ch;margin-bottom:clamp(20px,4vh,48px)}
+.apoyo{color:var(--texto-2);max-width:56ch}
+.etiqueta-estado{display:inline-block;font-size:var(--t-pequeno);font-weight:600;padding:2px 8px;border:1px dashed var(--alerta);color:var(--alerta);border-radius:3px;vertical-align:middle}
+.pendiente{outline:2px dashed var(--alerta);outline-offset:5px;border-radius:2px}
+
+/* ---------- logotipo ---------- */
+.logo{display:flex;align-items:center;gap:clamp(12px,1.4vw,22px)}
+.logo svg{width:clamp(44px,4.8vw,74px);height:auto;flex:none}
+.logo .nombre{display:block;font-size:clamp(40px,5vw,78px);font-weight:700;letter-spacing:-.025em;line-height:1}
+.logo .lema{display:block;margin-top:6px;font-size:clamp(13px,1.1vw,17px);color:var(--turquesa-luz);letter-spacing:.06em}
+
+/* ---------- 1 portada ---------- */
+.portada .cuerpo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,4vw,72px);align-items:center}
+.portada .logo{margin-bottom:clamp(28px,5vh,56px)}
+.portada h1{font-size:clamp(24px,2.6vw,40px);font-weight:600;max-width:22ch;line-height:1.2;margin-bottom:clamp(24px,4.5vh,48px)}
+.ficha{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;font-size:var(--t-pequeno);border-top:1px solid var(--linea);padding-top:14px;max-width:460px}
+.ficha dt{color:var(--texto-2)}
+.ficha dd{color:var(--texto);font-weight:500}
+.plano{width:100%;height:auto;max-height:72vh;background:var(--noche-2);border-radius:6px}
+.plano .linea{stroke:#33495E;fill:none;stroke-width:1.2}
+.plano .edificio{fill:var(--noche-3);stroke:var(--texto-2);stroke-width:1.4}
+.plano .zona{fill:url(#rayado);stroke:var(--turquesa-luz);stroke-width:1.6}
+.plano text{font-family:inherit;font-size:13px;fill:var(--texto-2)}
+.plano .rotulo-zona{fill:var(--noche);font-weight:600}
+.plano .rotulo-fondo{fill:var(--turquesa-luz)}
+.plano .ruta{stroke:var(--alerta);stroke-width:2.2;fill:none;stroke-dasharray:6 7}
+.plano .dron{fill:var(--alerta)}
+.plano .helice{fill:none;stroke:var(--alerta);stroke-width:1.6}
+.plano .onda{fill:none;stroke:var(--alerta);stroke-width:1.4;opacity:0}
+.plano .sensor{fill:var(--turquesa-luz)}
+.plano .aviso{opacity:0}
+.plano .aviso rect{fill:var(--alerta)}
+.plano .aviso text{fill:var(--noche);font-weight:600}
+.plano .aviso circle{fill:var(--noche)}
+
+.animar .ruta{animation:trazar 2.6s ease-out both}
+.animar .dron-grupo{animation:volar 2.6s ease-out both}
+.animar .onda{animation:onda 1.6s ease-out 2.4s 2 both}
+.animar .aviso{animation:aparecer .5s ease-out 3.1s both}
+@keyframes trazar{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes volar{from{transform:translate(-330px,-120px)}to{transform:translate(0,0)}}
+@keyframes onda{0%{opacity:.9;r:8}100%{opacity:0;r:90}}
+@keyframes aparecer{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- 2 problema ---------- */
+.heroe{font-size:var(--t-heroe);font-weight:800;letter-spacing:-.045em;line-height:.9;color:var(--texto)}
+.heroe small{font-size:.32em;font-weight:700;letter-spacing:-.01em;margin-left:.12em;color:var(--turquesa-luz)}
+.problema .cuerpo{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(28px,6vw,96px);align-items:end}
+.problema h2{grid-column:1 / -1;margin-bottom:clamp(8px,2vh,20px)}
+.problema .leyenda{margin-top:16px;max-width:42ch}
+.comparativa{background:var(--noche-2);border-radius:6px;padding:clamp(16px,2vw,28px)}
+.comparativa .par{display:flex;align-items:baseline;gap:14px;font-weight:700;font-size:clamp(36px,4.2vw,64px);line-height:1;letter-spacing:-.03em}
+.comparativa .par .antes{color:var(--texto-2)}
+.comparativa .par .flecha{font-size:.45em;color:var(--texto-2)}
+.comparativa .par span:last-child{color:var(--turquesa-luz)}
+.comparativa p{margin-top:12px;color:var(--texto-2);max-width:34ch}
+
+/* ---------- 3 casos ---------- */
+.casos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2.4vw,36px)}
+.caso{background:var(--noche-2);border-radius:6px;padding:clamp(18px,2.2vw,32px);position:relative}
+.caso .lugar{display:flex;justify-content:space-between;gap:12px;font-size:var(--t-pequeno);color:var(--texto-2);margin-bottom:16px}
+.caso .lugar span:first-child::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--alerta);margin-right:10px;vertical-align:.1em;box-shadow:0 0 0 4px rgba(240,162,58,.18)}
+.caso h3{font-size:clamp(19px,1.75vw,26px);font-weight:700;line-height:1.25;letter-spacing:-.01em;margin-bottom:10px}
+.caso p{color:var(--texto-2);font-size:clamp(15px,1.3vw,19px)}
+.conclusion{margin-top:clamp(20px,3.8vh,40px);font-weight:600;font-size:clamp(18px,1.7vw,25px);max-width:48ch;color:var(--turquesa-luz)}
+
+/* ---------- 4 servicio ---------- */
+.flujo{list-style:none;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;counter-reset:paso;position:relative}
+.flujo li{counter-increment:paso;padding:0 clamp(8px,1vw,16px) 0 0;position:relative}
+.flujo li::before{content:counter(paso);display:grid;place-items:center;width:clamp(32px,2.7vw,42px);height:clamp(32px,2.7vw,42px);border-radius:50%;
+  background:var(--turquesa);color:var(--noche);font-weight:700;font-size:var(--t-pequeno);margin-bottom:16px;position:relative;z-index:1}
+.flujo li::after{content:"";position:absolute;top:calc(clamp(32px,2.7vw,42px)/2);left:0;right:0;height:2px;background:var(--linea);z-index:0}
+.flujo li:last-child::after{right:auto;width:clamp(32px,2.7vw,42px)}
+.flujo li.cliente::before{background:var(--noche);color:var(--texto);border:2px dashed var(--texto-2)}
+.flujo strong{display:block;font-size:clamp(15px,1.35vw,20px);line-height:1.2;margin-bottom:6px}
+.flujo span{display:block;font-size:var(--t-pequeno);color:var(--texto-2);line-height:1.4}
+.leyenda-flujo{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:clamp(24px,4.5vh,44px);font-size:var(--t-pequeno);color:var(--texto-2)}
+.leyenda-flujo i{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--turquesa);vertical-align:-2px;margin-right:8px}
+.leyenda-flujo i.disc{background:transparent;border:2px dashed var(--texto-2)}
+.leyenda-flujo b{color:var(--texto);font-weight:600}
+
+/* ---------- tablas ---------- */
+.matriz,.compet{width:100%;border-collapse:separate;border-spacing:0;background:var(--noche-2);border-radius:6px;overflow:hidden}
+.matriz{font-size:clamp(15px,1.35vw,20px)}
+.compet{font-size:clamp(14px,1.22vw,19px)}
+.matriz th,.matriz td{padding:clamp(11px,1.7vh,18px) clamp(12px,1.4vw,22px);text-align:left;border-bottom:1px solid var(--linea);vertical-align:middle}
+.compet th,.compet td{padding:clamp(10px,1.5vh,16px) clamp(10px,1.1vw,18px);text-align:left;border-bottom:1px solid var(--linea)}
+.matriz tr:last-child>*,.compet tr:last-child>*{border-bottom:0}
+.matriz thead th,.compet thead th{font-size:var(--t-pequeno);color:var(--texto-2);font-weight:500;vertical-align:bottom}
+.compet thead th{font-size:clamp(14px,1.2vw,18px);color:var(--texto);font-weight:700}
+.matriz tbody th,.compet tbody th{font-weight:600}
+.compet tbody th{font-weight:500}
+.matriz small,.compet small{display:block;font-weight:400;color:var(--texto-2);font-size:var(--t-pequeno)}
+.matriz .app>*{background:var(--noche-3)}
+.compet .nos{background:var(--marino)}
+.compet thead .nos{color:var(--turquesa-luz)}
+.compet thead .nos small{color:#B7C7D6}
+.sin-dato{color:var(--texto-2)}
+.marca-si,.marca-no,.marca-quiza{display:inline-flex;align-items:center;gap:9px}
+.marca-si::before,.marca-no::before,.marca-quiza::before{content:"";width:13px;height:13px;border-radius:50%;flex:none}
+.marca-si::before{background:var(--turquesa-luz)}
+.marca-no::before{border:1.5px solid var(--texto-2)}
+.marca-quiza::before{background:linear-gradient(90deg,var(--turquesa-luz) 50%,transparent 50%);border:1.5px solid var(--turquesa-luz)}
+.nota-objetivo{margin-top:clamp(16px,3vh,28px);display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
+.nota-objetivo b{font-size:clamp(26px,2.6vw,38px);font-weight:800;color:var(--turquesa-luz);letter-spacing:-.02em}
+.nota-objetivo strong{color:var(--texto)}
+
+/* ---------- 7 piloto ---------- */
+.piloto .cuerpo{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:start}
+.barras{display:grid;gap:16px}
+.barra{display:grid;grid-template-columns:minmax(150px,17ch) 1fr auto;align-items:center;gap:14px;font-size:clamp(14px,1.25vw,18px)}
+.barra .pista{height:clamp(22px,3.2vh,34px);position:relative;background:var(--noche-2);border-radius:3px}
+.barra .relleno{position:absolute;inset:0 auto 0 0;background:var(--texto);border-radius:3px}
+.barra.coste .relleno{background:#5B6F82}
+.barra.margen .relleno{background:var(--turquesa)}
+.barra .valor{font-weight:700;min-width:7ch;text-align:right}
+.barra.margen .valor{color:var(--turquesa-luz)}
+.aclaracion{margin-top:16px;font-size:var(--t-pequeno);color:var(--texto-2);max-width:60ch}
+.pasos{list-style:none;border-left:2px solid var(--linea);padding-left:24px;display:grid;gap:clamp(12px,2.2vh,22px)}
+.pasos li{position:relative}
+.pasos li::before{content:"";position:absolute;left:-32px;top:.4em;width:14px;height:14px;border-radius:50%;background:var(--turquesa)}
+.pasos li.opcion::before{background:var(--noche);border:2px dashed var(--texto-2)}
+.pasos strong{display:block}
+.pasos span{font-size:var(--t-pequeno);color:var(--texto-2)}
+.cifra-colchon{margin-top:clamp(18px,3vh,32px);padding:16px 20px;background:var(--marino);border-radius:6px}
+.cifra-colchon b{font-size:clamp(24px,2.4vw,34px);letter-spacing:-.02em;display:block}
+.cifra-colchon .apoyo{color:#B7C7D6}
+
+/* ---------- 8 equipo ---------- */
+.equipo{list-style:none;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(12px,1.6vw,24px)}
+.equipo li{background:var(--noche-2);border-radius:6px;padding:clamp(14px,1.6vw,22px)}
+.equipo .iniciales{width:clamp(56px,5.2vw,80px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:var(--marino);color:var(--texto);font-weight:700;font-size:clamp(18px,1.6vw,24px);margin-bottom:14px;box-shadow:0 0 0 2px var(--turquesa)}
+.equipo strong{display:block;font-size:clamp(16px,1.4vw,20px);line-height:1.25}
+.equipo .rol{display:inline-block;margin:8px 0 10px}
+.equipo .apoyo{display:block}
+.equipo a{display:block;font-size:var(--t-pequeno);color:var(--turquesa-luz)}
+
+/* ---------- 9 cierre ---------- */
+.cierre .cuerpo{text-align:center;display:grid;justify-items:center;gap:clamp(18px,3.2vh,34px)}
+.cierre .logo{text-align:left}
+.cierre .peticion{font-size:clamp(26px,3.1vw,46px);font-weight:700;letter-spacing:-.02em;line-height:1.15;max-width:24ch}
+.cierre .detalle{color:var(--texto-2);max-width:52ch}
+.contacto{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 32px;font-size:var(--t-pequeno);border-top:1px solid var(--linea);padding-top:16px}
+.contacto a{color:var(--turquesa-luz)}
+
+/* ---------- entradas ---------- */
+.entra{opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
+.visible .entra{opacity:1;transform:none}
+
+/* ---------- notas del orador (tecla N) ---------- */
+.notas{display:none}
+body.con-notas .notas{display:block;position:absolute;right:var(--margen);bottom:clamp(44px,7vh,72px);width:min(460px,90vw);max-height:46vh;overflow:auto;
+  background:var(--texto);color:var(--noche);padding:16px 18px;font-size:14px;line-height:1.45;z-index:5;border-radius:6px}
+body.con-notas .notas p+p{margin-top:8px}
+
+/* ---------- navegación ---------- */
+.indice{position:fixed;right:clamp(8px,1.4vw,22px);top:50%;transform:translateY(-50%);display:grid;gap:10px;z-index:10}
+.indice a{width:8px;height:8px;border-radius:50%;background:var(--linea);display:block}
+.indice a[aria-current="true"]{background:var(--turquesa-luz);box-shadow:0 0 0 4px rgba(92,198,190,.2)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--turquesa-luz);outline-offset:3px}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .diapo{padding-left:calc(var(--margen) + 18px)}
+  .portada .cuerpo,.problema .cuerpo,.piloto .cuerpo{grid-template-columns:1fr}
+  .casos{grid-template-columns:1fr}
+  .flujo{grid-template-columns:1fr 1fr;row-gap:28px}
+  .flujo li::after{display:none}
+  .equipo{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .compet{font-size:13px;min-width:620px}
+  .matriz{min-width:520px}
+  .indice{display:none}
+  .plano{max-height:40vh}
+  .portada .diapo .cabecera,.portada .cabecera{flex-direction:column;align-items:flex-start;gap:4px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .entra{opacity:1;transform:none;transition:none}
+  .animar .ruta,.animar .dron-grupo,.animar .onda,.animar .aviso{animation:none}
+  .plano .aviso{opacity:1}
+}
+@media print{
+  html{scroll-snap-type:none}
+  .diapo{page-break-after:always;min-height:100vh;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .indice,.notas{display:none!important}
+  .entra{opacity:1;transform:none}
+  .plano .aviso{opacity:1}
+}
+</style>
+</head>
+<body>
+
+<!-- logotipo: recreación en SVG del escudo provisional del equipo (sustituir por el SVG final cuando esté) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="simbolo" viewBox="-12 -12 424 504">
+    <path d="M200 0 L393 67 V242 C393 362 302 438 200 477 C98 438 7 362 7 242 V67 Z" fill="none" stroke="#EAF0F4" stroke-width="20" stroke-linejoin="round"/>
+    <path d="M100 106 Q200 42 298 106" fill="none" stroke="#2A9490" stroke-width="17" stroke-linecap="round"/>
+    <path d="M147 144 Q200 102 253 144" fill="none" stroke="#2A9490" stroke-width="17" stroke-linecap="round"/>
+    <path d="M77 275 L200 191 L323 275 L291 313 L200 255 L109 313 Z" fill="#EAF0F4"/>
+  </symbol>
+</svg>
+
+<nav class="indice" aria-label="Diapositivas"></nav>
+
+<!-- ======================= 1 · PORTADA ======================= -->
+<section class="diapo portada" id="d1" aria-label="Portada">
+  <header class="cabecera"><span>UJI Startup Bootcamp 2026 · Reto Skytech · Grupo 8</span><span>Última actualización: 6 de noviembre de 2026</span></header>
+  <div class="cuerpo">
+    <div>
+      <div class="logo"><svg viewBox="-12 -12 424 504" aria-hidden="true"><use href="#simbolo"/></svg><div><span class="nombre">Dronect</span><span class="lema">Protección frente al espionaje con drones</span></div></div>
+      <h1>Protegemos los secretos industriales de las empresas con I+D frente a los drones que los observan desde el aire.</h1>
+      <dl class="ficha">
+        <dt>Presenta</dt><dd class="pendiente">[Nombre] · [rol] — por definir</dd>
+        <dt>Equipo</dt><dd>Clara, Izan, Judit, Marco y Miguel</dd>
+      </dl>
+    </div>
+    <svg class="plano" viewBox="0 0 560 420" role="img" aria-label="Plano visto desde arriba: un dron se acerca a la zona de I+D de una planta, los sensores lo detectan y salta un aviso de nivel ámbar.">
+      <defs>
+        <pattern id="rayado" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width="8" height="8" fill="#122130"/><line x1="0" y1="0" x2="0" y2="8" stroke="#2A9490" stroke-width="1.6"/>
+        </pattern>
+      </defs>
+      <!-- calles y parcela -->
+      <path class="linea" d="M0 360 H560 M0 384 H560 M470 0 V420 M494 0 V420"/>
+      <rect class="linea" x="40" y="40" width="400" height="290" stroke-dasharray="4 4"/>
+      <text x="48" y="322">Límite de la parcela</text>
+      <!-- edificios -->
+      <rect class="edificio" x="80" y="150" width="190" height="140"/>
+      <text x="90" y="282">Oficinas</text>
+      <rect class="zona" x="290" y="90" width="120" height="200"/>
+      <rect class="rotulo-fondo" x="296" y="96" width="94" height="22"/>
+      <text class="rotulo-zona" x="301" y="112">Zona de I+D</text>
+      <!-- árboles -->
+      <g class="linea"><circle cx="70" cy="80" r="14"/><circle cx="104" cy="72" r="11"/><circle cx="150" cy="86" r="13"/></g>
+      <!-- sensores -->
+      <g><rect class="sensor" x="404" y="84" width="10" height="10"/><rect class="sensor" x="284" y="284" width="10" height="10"/></g>
+      <text x="420" y="76">Sensores</text>
+      <!-- ruta del dron -->
+      <path class="ruta" d="M20 22 C120 30 200 40 270 70 S 330 104 350 130"/>
+      <g class="dron-grupo">
+        <circle class="onda" cx="350" cy="130" r="8"/>
+        <g class="dron" transform="translate(350 130)">
+          <circle r="6"/><circle cx="-11" cy="-11" r="4.5" class="helice"/><circle cx="11" cy="-11" r="4.5" class="helice"/>
+          <circle cx="-11" cy="11" r="4.5" class="helice"/><circle cx="11" cy="11" r="4.5" class="helice"/>
+        </g>
+      </g>
+      <!-- aviso -->
+      <g transform="translate(182 314)"><g class="aviso">
+        <rect width="278" height="34" rx="2"/>
+        <circle cx="18" cy="17" r="6"/>
+        <text x="32" y="22">Ámbar · dron sin identificar, zona I+D</text>
+      </g></g>
+    </svg>
+  </div>
+  <footer class="pie"><span class="fuente">Plano ilustrativo; no representa una instalación real.</span><span class="folio">1 / 9</span></footer>
+  <aside class="notas">
+    <p>(~20 s) «Somos Dronect. Protegemos lo que una empresa con I+D no quiere que se vea desde el aire: prototipos, líneas de producción, pruebas.»</p>
+    <p>La portada no lleva eslogan: dice qué hacemos. Completar quién presenta y su rol cuando el equipo lo decida.</p>
+  </aside>
+</section>
+
+<!-- ======================= 2 · PROBLEMA ======================= -->
+<section class="diapo problema" id="d2" aria-label="Problema">
+  <header class="cabecera"><span>El problema</span></header>
+  <div class="cuerpo">
+      <h2>El espionaje y el robo de información ya cuestan miles de millones a la industria europea.</h2>
+      <div class="entra">
+        <p class="heroe">211.000<small>M€</small></p>
+        <p class="apoyo leyenda">Daño mínimo en un año a las empresas alemanas por robo de datos, espionaje y sabotaje. Solo cuenta los casos confirmados.</p>
+      </div>
+    <div class="comparativa entra">
+      <p class="par"><span class="antes">28 %</span><span class="flecha">→</span><span>37 %</span></p>
+      <p>de las empresas afectadas señala a un servicio de inteligencia extranjero detrás del ataque (2025 → 2026).</p>
+    </div>
+  </div>
+  <footer class="pie"><span class="fuente">Fuente: Bitkom, <a href="https://www.bitkom.org/sites/main/files/2026-08/bitkom-praesentation-wirtschaftsschutz-2026.pdf">Wirtschaftsschutz 2026</a> (encuesta a 1.003 empresas, ago. 2026); <a href="https://www.channelpartner.de/article/4214599/firmen-beobachten-mehr-angriffe-auslandischer-geheimdienste.html">ChannelPartner/dpa, 27/08/2026</a>. La cifra incluye todos los vectores, la mayoría digitales.</span><span class="folio">2 / 9</span></footer>
+  <aside class="notas">
+    <p>(~25 s) «Solo en Alemania, el robo de datos, el espionaje y el sabotaje cuestan al menos 211.000 millones al año. Y cada vez más empresas ven a servicios de inteligencia extranjeros detrás: del 28 al 37 % en un año.»</p>
+    <p>Cuidado: NO decir que los drones causan esos 211.000 M€. Es la dimensión del espionaje en general; el dron es una vía más, y la menos vigilada.</p>
+  </aside>
+</section>
+
+<!-- ======================= 3 · CASOS ======================= -->
+<section class="diapo" id="d3" aria-label="Casos reales">
+  <header class="cabecera"><span>Por qué ahora</span></header>
+  <div class="cuerpo">
+    <h2>Los drones ya sobrevuelan plantas industriales europeas, y detectarlos no basta.</h2>
+    <div class="casos entra">
+      <article class="caso">
+        <div class="lugar"><span>Évegnée (Lieja), Bélgica</span><span>Octubre de 2025</span></div>
+        <h3>Thales Belgium ve cada vez más drones sin identificar sobre su planta de cohetes.</h3>
+        <p>Ya tenía detectores instalados, pero la ley no le permite neutralizarlos. Pide al Gobierno normas claras sobre qué hacer.</p>
+      </article>
+      <article class="caso">
+        <div class="lugar"><span>Múnich, Alemania</span><span>Julio de 2026</span></div>
+        <h3>Detenido por espionaje tras sobrevolar con un dron una empresa de defensa.</h3>
+        <p>Según la fiscalía, el dron habría captado imágenes de las instalaciones. Lo detuvieron porque los vecinos dieron el aviso.</p>
+      </article>
+    </div>
+    <p class="conclusion entra">Saber que hay un dron es solo el principio: hay que decidir qué hacer y guardar pruebas.</p>
+  </div>
+  <footer class="pie"><span class="fuente">Fuentes: Politico vía <a href="https://kyivindependent.com/belgium-based-arms-maker-reports-mounting-cases-of-suspicious-drone-sightings/">Kyiv Independent, 08/10/2025</a> y <a href="https://babel.ua/en/news/122036-belgian-air-defense-manufacturer-reports-increase-in-number-of-unidentified-drones-over-its-facilities">Babel</a>; AFP vía <a href="https://www.arabnews.com/node/2651293/world">Arab News, 17/07/2026</a> y <a href="https://threatcluster.io/cluster/germany-arrests-moldovan-on-suspicion-of-espionage-b5bb53b2">ThreatCluster</a>.</span><span class="folio">3 / 9</span></footer>
+  <aside class="notas">
+    <p>(~30 s) «No es teoría. En Bélgica, Thales ve cada vez más drones sobre su planta. Ya tenía detectores, pero no puede hacer nada con ellos. En Múnich detuvieron a un hombre que fotografiaba con un dron a una empresa de defensa; lo pillaron porque avisaron los vecinos.»</p>
+    <p>«Detectar no basta: falta un protocolo y pruebas que sirvan después.» → enlaza con la solución.</p>
+  </aside>
+</section>
+
+<!-- ======================= 4 · SERVICIO ======================= -->
+<section class="diapo" id="d4" aria-label="Qué es Dronect">
+  <header class="cabecera"><span>Qué hacemos</span></header>
+  <div class="cuerpo">
+    <h2>Vendemos un servicio de seguridad completo, no un detector.</h2>
+    <ol class="flujo entra">
+      <li><strong>Auditamos</strong><span>Qué se ve desde el aire y qué está en riesgo.</span></li>
+      <li><strong>Instalamos sensores</strong><span>En la zona que más se expone.</span></li>
+      <li><strong>Valoramos el riesgo</strong><span>Separamos vuelos autorizados de sospechosos.</span></li>
+      <li><strong>Avisamos con un protocolo</strong><span>A la persona adecuada, según el nivel.</span></li>
+      <li class="cliente"><strong>La empresa actúa</strong><span>Tapa lo sensible y, si hace falta, avisa a la policía.</span></li>
+      <li><strong>Documentamos</strong><span>Un informe con pruebas listo para los abogados.</span></li>
+    </ol>
+    <div class="leyenda-flujo entra">
+      <span><i></i>Lo hace Dronect</span>
+      <span><i class="disc"></i>Lo hace el cliente</span>
+      <span><b>Software:</b> propio. <b>Sensores:</b> comprados a terceros. <b>Sin contramedidas:</b> ni inhibidores ni derribos.</span>
+    </div>
+  </div>
+  <footer class="pie"><span class="fuente">Fuente: Dronect, Project Charter y Pitch &amp; Positioning v0.2 (06/11/2026).</span><span class="folio">4 / 9</span></footer>
+  <aside class="notas">
+    <p>(~30 s) «Dronect es seguridad como servicio. Auditamos qué se ve desde el aire, instalamos sensores, valoramos cada vuelo, avisamos con un protocolo hecho para esa empresa y documentamos lo que pasa para que sus abogados puedan actuar.»</p>
+    <p>Si preguntan por actuar contra el dron: la ley no lo permite a empresas privadas; lo hace la autoridad competente. Nosotros dificultamos la exposición y dejamos pruebas. Incluye orientación legal básica; litigios y patentes, aparte.</p>
+  </aside>
+</section>
+
+<!-- ======================= 5 · SENSORES / POR QUÉ NO GRATIS ======================= -->
+<section class="diapo" id="d5" aria-label="Cómo detectamos">
+  <header class="cabecera"><span>Por qué no basta una app gratuita</span></header>
+  <div class="cuerpo">
+    <h2>Un dron que espía no se identifica. Por eso también lo escuchamos y lo vemos.</h2>
+    <div class="tabla-scroll entra"><table class="matriz">
+      <thead><tr><th scope="col">Cómo se detecta</th><th scope="col">Dron que emite su identificación (Remote ID)</th><th scope="col">Dron «silencioso»: modificado o que vuela solo</th></tr></thead>
+      <tbody>
+        <tr class="app"><th scope="row">Leer su señal de radio<small>Lo único que hacen las apps gratuitas</small></th><td><span class="marca-si">Sí</span></td><td><span class="marca-no">No</span></td></tr>
+        <tr><th scope="row">Micrófonos<small>El sonido de las hélices</small></th><td><span class="marca-quiza">A corta distancia</span></td><td><span class="marca-quiza">A corta distancia</span></td></tr>
+        <tr><th scope="row">Cámaras<small>Su silueta en el cielo, de día</small></th><td><span class="marca-quiza">Con visión directa</span></td><td><span class="marca-quiza">Con visión directa</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="nota-objetivo entra"><b>99,9 %</b><span class="apoyo">de drones detectados es nuestro <strong>objetivo</strong>. Lo mediremos con vuelos autorizados; hoy no está demostrado.</span></p>
+  </div>
+  <footer class="pie"><span class="fuente">Fuentes: Comisión Europea, JRC, <a href="https://publications.jrc.ec.europa.eu/repository/handle/JRC140692">tecnologías de detección antidrones (2025)</a>; Dronect, Technical Feasibility v0.2. Cada sensor depende del ruido, la luz, el tiempo y la distancia.</span><span class="folio">5 / 9</span></footer>
+  <aside class="notas">
+    <p>(~30 s) «¿Por qué pagar si hay apps gratis que detectan drones? Porque solo leen la señal que el dron emite voluntariamente. El que viene a espiar no la emite. Combinamos esa señal con micrófonos y cámaras, que pueden captar también a los drones silenciosos.»</p>
+    <p>Si preguntan por el 99,9 %: es una meta de investigación. Demostrarlo con rigor exige miles de vuelos de prueba (unos 3.000 sin fallo). No lo presentamos como resultado.</p>
+  </aside>
+</section>
+
+<!-- ======================= 6 · COMPETENCIA ======================= -->
+<section class="diapo" id="d6" aria-label="Competencia">
+  <header class="cabecera"><span>Competencia</span></header>
+  <div class="cuerpo">
+    <h2>No somos los únicos. Somos los que se centran en proteger el secreto industrial.</h2>
+    <div class="tabla-scroll entra"><table class="compet">
+      <thead><tr>
+        <th scope="col"></th>
+        <th scope="col">Apps gratuitas<small>Drone Scanner (Dronetag)</small></th>
+        <th scope="col">Sistemas de detección<small>Dedrone</small></th>
+        <th scope="col">Servicios gestionados<small>Orange Drone Guardian, Materna</small></th>
+        <th scope="col" class="nos">Dronect<small>En validación</small></th>
+      </tr></thead>
+      <tbody>
+        <tr><th scope="row">Detecta drones que no se identifican</th><td><span class="marca-no">No</span></td><td><span class="marca-si">Sí, varios sensores</span></td><td><span class="marca-si">Sí</span></td><td class="nos"><span class="marca-quiza">Objetivo, por probar</span></td></tr>
+        <tr><th scope="row">Protocolo de respuesta para cada cliente</th><td><span class="marca-no">No</span></td><td><span class="marca-quiza">Apoyo a protocolos</span></td><td><span class="marca-si">Sí</span></td><td class="nos"><span class="marca-si">Sí</span></td></tr>
+        <tr><th scope="row">Pruebas preparadas para un proceso legal</th><td><span class="marca-no">No</span></td><td><span class="marca-si">Sí, forense</span></td><td><span class="sin-dato">Sin datos</span></td><td class="nos"><span class="marca-si">Sí, con orientación legal</span></td></tr>
+        <tr><th scope="row">Pensado para empresas con I+D</th><td><span class="marca-no">No</span></td><td><span class="marca-no">Genérico</span></td><td><span class="marca-no">Genérico</span></td><td class="nos"><span class="marca-si">Sí</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <footer class="pie"><span class="fuente">Fuentes: webs de <a href="https://www.dedrone.com/solutions/dedrone-fixed-site">Dedrone</a>, <a href="https://www.materna.de/en/services/cyber-resilience-management/monitoring-und-nachhaltige-resilienz/drone-detection/">Materna</a> y <a href="https://www.orange-business.com/en/press/orange-business-launches-orange-drone-guardian-europe-first-anti-drone-service-solution">Orange Business (17/03/2026)</a>; lo que dicen de sí mismas, sin verificar. Nuestra diferencia está por validar con clientes.</span><span class="folio">6 / 9</span></footer>
+  <aside class="notas">
+    <p>(~25 s) «Hay competidores serios: Dedrone en tecnología y Orange o Materna en servicio. Ellos protegen aeropuertos, estadios o infraestructuras en general. Nosotros nos centramos en una cosa: el secreto industrial de empresas con I+D, con protocolos hechos a medida y pruebas que sirvan después.»</p>
+    <p>No decir «somos los primeros»: Orange lanzó su servicio gestionado en Europa en marzo de 2026.</p>
+  </aside>
+</section>
+
+<!-- ======================= 7 · PILOTO ======================= -->
+<section class="diapo piloto" id="d7" aria-label="Piloto y cifras">
+  <header class="cabecera"><span>Modelo de negocio y piloto</span></header>
+  <div class="cuerpo">
+    <div>
+      <h2>Objetivo: un piloto de 1.200 € al trimestre que se paga solo en seis meses.</h2>
+      <div class="barras entra" role="img" aria-label="Piloto de seis meses: ingresos 2.400 euros, costes estimados 2.000 euros, margen de caja 400 euros.">
+        <div class="barra"><span>Ingresos, 2 trimestres</span><span class="pista"><span class="relleno" style="width:100%"></span></span><span class="valor">2.400 €</span></div>
+        <div class="barra coste"><span>Costes estimados</span><span class="pista"><span class="relleno" style="width:83.3%"></span></span><span class="valor">2.000 €</span></div>
+        <div class="barra margen"><span>Queda en caja</span><span class="pista"><span class="relleno" style="width:16.7%"></span></span><span class="valor">+400 €</span></div>
+      </div>
+      <p class="aclaracion entra">IVA no incluido. Costes: kit de sensores (≈1.610 €), instalación y desplazamientos (170 €) y operación (220 €). Los fundadores no cobran sueldo durante el piloto. Estimaciones, no presupuestos de proveedor.</p>
+    </div>
+    <div>
+      <ol class="pasos entra">
+        <li><strong>Pruebas de banco</strong><span>Sensores reales en mesa; registro de señales.</span></li>
+        <li><strong>Vuelos autorizados</strong><span>Medimos qué detectamos y qué no, también drones silenciosos.</span></li>
+        <li><strong>Primer piloto pagado en España</strong><span>Una zona de una empresa con I+D, seis meses.</span></li>
+        <li class="opcion"><strong>Más adelante, como opción</strong><span>Red de inteligencia entre clientes, con su consentimiento.</span></li>
+      </ol>
+      <div class="cifra-colchon entra"><b>2.500–4.000 €</b><span class="apoyo">de capital para lanzar el primer piloto con margen para imprevistos.</span></div>
+    </div>
+  </div>
+  <footer class="pie"><span class="fuente">Fuente: Dronect, Business &amp; Unit Economics y Pilot BOM v0.2 (06/11/2026), escenario objetivo. Si el cliente paga tarde o surge un gasto imprevisto, el margen de 400 € puede desaparecer.</span><span class="folio">7 / 9</span></footer>
+  <aside class="notas">
+    <p>(~35 s) «Empezamos pequeño y sin perder dinero. Un piloto de seis meses, a 1.200 € por trimestre, con un kit de unos 1.600 €. Si cobramos los dos trimestres, el piloto se paga solo y deja unos 400 €. Para arrancar necesitamos entre 2.500 y 4.000 €.»</p>
+    <p>Siempre «IVA no incluido»: con IVA incluido, el piloto quedaría en unos −17 €. El precio de producción será mayor; el piloto valida, no demuestra un negocio sostenible. La red de inteligencia y una posible vía con Defensa (B2B2G) son opciones, no ingresos previstos.</p>
+  </aside>
+</section>
+
+<!-- ======================= 8 · EQUIPO ======================= -->
+<section class="diapo" id="d8" aria-label="Equipo">
+  <header class="cabecera"><span>Equipo</span></header>
+  <div class="cuerpo">
+    <h2 class="pendiente">[Título del equipo: pendiente de definir roles]</h2>
+    <ul class="equipo entra">
+      <li><div class="iniciales">CP</div><strong>Clara P. Escrig</strong><span class="rol etiqueta-estado">Rol por definir</span><a href="https://www.linkedin.com/in/clara-p-escrig-5b5300251/">LinkedIn</a></li>
+      <li><div class="iniciales">IZ</div><strong>Izan</strong><span class="rol etiqueta-estado">Rol por definir</span><span class="apoyo" style="font-size:var(--t-pequeno)">Sin LinkedIn</span></li>
+      <li><div class="iniciales">JP</div><strong>Judit Picó Llabrés</strong><span class="rol etiqueta-estado">Rol por definir</span><a href="https://www.linkedin.com/in/judit-pic%C3%B3-llabr%C3%A9s-225971231">LinkedIn</a></li>
+      <li><div class="iniciales">MQ</div><strong>Marco Quirante Linares</strong><span class="rol etiqueta-estado">Rol por definir</span><a href="https://www.linkedin.com/in/marco-quirante-linares-22163b339">LinkedIn</a></li>
+      <li><div class="iniciales">MF</div><strong>Miguel</strong><span class="rol etiqueta-estado">Rol por definir</span><a href="https://www.linkedin.com/in/mikefieldins/">LinkedIn</a></li>
+    </ul>
+  </div>
+  <footer class="pie"><span class="fuente">Roles y logros: pendientes de confirmar por el equipo. No se inventan cargos.</span><span class="folio">8 / 9</span></footer>
+  <aside class="notas">
+    <p>(~20 s) Pendiente. Cuando estén los roles: un título que diga algo del equipo, rol estándar (CEO, CTO, CMO…) y un logro real de una línea por persona.</p>
+  </aside>
+</section>
+
+<!-- ======================= 9 · CIERRE ======================= -->
+<section class="diapo cierre" id="d9" aria-label="Cierre">
+  <header class="cabecera"><span>Siguiente paso</span><span>UJI Startup Bootcamp 2026</span></header>
+  <div class="cuerpo">
+    <div class="logo"><svg viewBox="-12 -12 424 504" aria-hidden="true"><use href="#simbolo"/></svg><div><span class="nombre">Dronect</span><span class="lema">Protección frente al espionaje con drones</span></div></div>
+    <p class="peticion">Buscamos una empresa con I+D en España para un piloto de seis meses.</p>
+    <p class="detalle">Una zona expuesta, sensores instalados por nosotros, un protocolo a su medida y un informe de resultados al final.</p>
+    <div class="contacto">
+      <span class="pendiente">[Contacto: nombre, rol y correo]</span>
+      <a href="https://github.com/UJIStartup-Bootcamp-2026">github.com/UJIStartup-Bootcamp-2026</a>
+    </div>
+  </div>
+  <footer class="pie"><span class="fuente">Protegemos los secretos industriales de las empresas con I+D frente a los drones que los observan desde el aire.</span><span class="folio">9 / 9</span></footer>
+  <aside class="notas">
+    <p>(~15 s) «Buscamos una empresa con I+D que quiera ser nuestro primer piloto. Si la conocéis, hablemos.» Fin. El resto del equipo responde preguntas.</p>
+    <p>Opcional: añadir un QR a la landing si da tiempo a hacerla.</p>
+  </aside>
+</section>
+
+<script>
+(function(){
+  var diapos=[].slice.call(document.querySelectorAll('.diapo'));
+  var indice=document.querySelector('.indice');
+  diapos.forEach(function(d,i){
+    var a=document.createElement('a');a.href='#'+d.id;a.setAttribute('aria-label',(i+1)+'. '+d.getAttribute('aria-label'));
+    indice.appendChild(a);
+  });
+  var puntos=[].slice.call(indice.children);
+  var actual=0;
+  var obs=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        var i=diapos.indexOf(e.target);actual=i;
+        puntos.forEach(function(p,j){p.setAttribute('aria-current',j===i?'true':'false')});
+        if(i===0){var pl=e.target.querySelector('.plano');if(pl&&!pl.classList.contains('animar'))pl.classList.add('animar')}
+      }
+    });
+  },{threshold:.55});
+  diapos.forEach(function(d){obs.observe(d)});
+  function ir(i){i=Math.max(0,Math.min(diapos.length-1,i));diapos[i].scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})}
+  document.addEventListener('keydown',function(e){
+    if(e.target.closest&&e.target.closest('input,textarea'))return;
+    if(['ArrowDown','ArrowRight','PageDown',' '].indexOf(e.key)>-1){e.preventDefault();ir(actual+1)}
+    else if(['ArrowUp','ArrowLeft','PageUp'].indexOf(e.key)>-1){e.preventDefault();ir(actual-1)}
+    else if(e.key==='Home'){e.preventDefault();ir(0)}
+    else if(e.key==='End'){e.preventDefault();ir(diapos.length-1)}
+    else if(e.key==='n'||e.key==='N'){document.body.classList.toggle('con-notas')}
+  });
+})();
+</script>
+</body>
+</html>
